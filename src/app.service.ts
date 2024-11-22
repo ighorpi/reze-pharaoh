@@ -31,6 +31,7 @@ export class AppService {
   @SlashCommand({
     name: 'temporizador',
     description: 'Temporizador boom! boom!',
+    dmPermission: false,
   })
   async bombTimer(
     @Context() [interaction]: SlashCommandContext,
