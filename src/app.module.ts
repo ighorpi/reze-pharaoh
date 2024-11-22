@@ -7,7 +7,16 @@ import { NecordModule } from 'necord';
   imports: [
     NecordModule.forRoot({
       token: process.env.DISCORD_TOKEN,
-      intents: [IntentsBitField.Flags.Guilds],
+      intents: [
+        IntentsBitField.Flags.Guilds,
+        IntentsBitField.Flags.GuildMessages,
+        IntentsBitField.Flags.GuildMembers,
+        IntentsBitField.Flags.GuildMessageTyping,
+        IntentsBitField.Flags.DirectMessages,
+        IntentsBitField.Flags.DirectMessageTyping,
+        IntentsBitField.Flags.MessageContent,
+        IntentsBitField.Flags.GuildVoiceStates,
+      ],
     }),
   ],
   providers: [AppService],
