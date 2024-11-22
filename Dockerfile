@@ -12,6 +12,7 @@ COPY nest*.json .
 COPY ./src .
 RUN npm install -g npm@latest
 RUN yarn
+RUN npx prisma generate
 RUN npm run build
 EXPOSE 3000
 ENTRYPOINT [ "npm","run"]
