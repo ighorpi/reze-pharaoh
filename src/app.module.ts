@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { AppService } from './app.service';
 import { IntentsBitField } from 'discord.js';
 import { NecordModule } from 'necord';
+import { ScheduleModule } from '@nestjs/schedule';
+import { PrismaModule } from './prisma.module';
+import { TasksService } from './tasks.service';
 
 @Module({
   imports: [
@@ -18,7 +21,9 @@ import { NecordModule } from 'necord';
         IntentsBitField.Flags.GuildVoiceStates,
       ],
     }),
+    ScheduleModule.forRoot(),
+    PrismaModule,
   ],
-  providers: [AppService],
+  providers: [AppService, TasksService],
 })
 export class AppModule {}

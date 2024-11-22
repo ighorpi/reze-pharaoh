@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import {
   Context,
   MessageCommand,
@@ -10,10 +10,15 @@ import {
 } from 'necord';
 import { TimerInput } from './dto/timerInput.dto';
 import { Client, EmbedBuilder, Message, TextChannel } from 'discord.js';
+import { PrismaService } from './prisma.service';
 
 @Injectable()
 export class AppService {
-  constructor(private readonly client: Client) {}
+  private readonly logger = new Logger(AppService.name);
+  constructor(
+    private readonly client: Client,
+    private readonly prisma: PrismaService,
+  ) {}
 
   @SlashCommand({
     name: 'tick',
@@ -40,10 +45,18 @@ export class AppService {
     await interaction.deferReply({ ephemeral: true });
     const userId = interaction.user.id;
     const channelId = interaction.channel.id;
-    const totalSeconds = (seconds ? seconds : 0) + (minutes ? minutes * 60 : 0);
+    const totalSeconds = (seconds || 0) + (minutes ? minutes * 60 : 0);
 
-    // this sendMessage should be schedule in now plus 'totalSeconds' in the future
-    this.sendMessage(`<@${userId}> BOOM! 💥💥💥 `, channelId);
+    const executeAt = new Date(Date.now() + totalSeconds * 1000);
+    const content = `<@${userId}> BOOM! 💥💥💥`;
+
+    await this.prisma.scheduledMessage.create({
+      data: {
+        channelId,
+        content,
+        executeAt,
+      },
+    });
 
     return interaction.editReply({
       content: `Tick-tack... São ${totalSeconds} segundos para boom! 💣💣💣`,
