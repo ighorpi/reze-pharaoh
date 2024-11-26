@@ -10,6 +10,7 @@ COPY tsconfig*.json .
 COPY .eslintrc.js .
 COPY nest*.json .
 COPY ./src .
+COPY ./prisma .
 RUN npm install -g npm@latest
 RUN yarn
 RUN npx prisma generate
