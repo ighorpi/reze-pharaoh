@@ -1,0 +1,21 @@
+when:
+  branch: development
+
+steps:
+  publish:
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      repo: ghcr.io/ighorpi/reze-pharaoh-bot
+      logins:
+        - registry: https://ghcr.io
+          username: ighorpi
+          password:
+            from_secret: CR_PAT
+      dockerfile: Dockerfile
+      platforms: linux/amd64
+      auto_tag: true
+      tag: latest
+    when:
+      branch: ${CI_REPO_DEFAULT_BRANCH}
+      event:
+        - push

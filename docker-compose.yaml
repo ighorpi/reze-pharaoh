@@ -1,4 +1,4 @@
-version: '3.9'
+name: reze-pharaoh
 services:
   app:
     container_name: reze-pharaoh-bot
@@ -6,16 +6,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    # ports:
-    # - "3000:3000"
     environment:
       NODE_ENV: production
       DISCORD_TOKEN: '${DISCORD_TOKEN}'
       DISCORD_DEVELOPMENT_GUILD_ID: '${DISCORD_DEVELOPMENT_GUILD_ID}'
       DATABASE_URL: '${DATABASE_URL}'
-
-    networks:
-      - reze-pharaoh-network
-networks:
-  reze-pharaoh-network:
-    driver: bridge
