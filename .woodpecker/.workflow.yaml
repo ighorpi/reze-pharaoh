@@ -1,5 +1,5 @@
 when:
-  branch: development
+  branch: main
 
 steps:
   publish:
