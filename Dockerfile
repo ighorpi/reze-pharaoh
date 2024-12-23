@@ -1,4 +1,4 @@
-FROM node:lts-alpine as base
+FROM node:lts-alpine AS base
 
 RUN apk upgrade -U \ 
     && apk add ca-certificates ffmpeg libva-intel-driver \
